@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<section class="page-section cta">
+  {% for pst in category.get_posts.all %}
+
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-9 mx-auto">
+            <div class="cta-innerv text-center rounded">
+              <h2 class="section-heading mb-5">
+                <span class="section-heading-upper">{{ pst.published|date:"d/m/Y" }}</span>
+                <span class="section-heading-lower">{{ pst.title }}</span>
+              </h2>
+              <p class="mb-0">
+                <img class="mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{{ pst.image.url }}" alt="">
+              </p>
+              <p class="mb-0 mbt">
+                {{ pst.content }}
+              </p>
+              <p class="mb-0 mbt">
+                <span class="section-heading-under">Publicado por <em><b>{{ pst.author }}</b></em> en 
+                  <em>
+                  {% for category in pst.categories.all %}
+                    <a href="{% url 'category' category.id %}" class="link">{{category.name}}</a>{% if not forloop.last %},{% endif %}
+                  {% endfor %}
+                  </em>
+                </span>
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+  {% endfor %}  
+    </section>
+{% endblock %}
+
